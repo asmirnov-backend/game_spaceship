@@ -1,10 +1,14 @@
 import pygame
 import draw_auxilary
+import lvls
 import settings
 from os import path
 
 background = pygame.image.load(path.join(settings.img_dir, "sky3.jpg")).convert()
 background_rect = background.get_rect()
+background_shop_large = pygame.image.load(path.join(settings.img_dir, "shop_back.jpg")).convert()
+background_shop = pygame.transform.scale(background_shop_large, (settings.WIDTH, settings.HEIGHT))
+background_shop_rect = background_shop.get_rect()
 background_menu = pygame.image.load(path.join(settings.img_dir, "sky2.jpg")).convert()
 background_main_menu = pygame.image.load(path.join(settings.img_dir, "sky3t.jpg")).convert()
 background_win = pygame.image.load(path.join(settings.img_dir, "purple.png")).convert()
@@ -51,42 +55,29 @@ def show_go_screen():
                     waiting = False
 
 
-
-def show_lvl1end_screen():
+def show_lvl_end_screen():
     pygame.mouse.set_visible(True)
     settings.screen.blit(background, background_rect)
-    draw_auxilary.draw_text("Первый уровень пройден!!!!", 36, settings.WIDTH / 2, settings.HEIGHT / 4)
-    draw_auxilary.draw_text("Умничка!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2)
-    draw_auxilary.draw_text("Нажми на абсолютно любую клавишу", 18, settings.WIDTH / 2, settings.HEIGHT * 3 / 4)
+    button_continue = Button("Продолжить", settings.WIDTH / 2, settings.HEIGHT / 2)
+    button_shop = Button("Магазин", settings.WIDTH / 2, settings.HEIGHT / 1.5)
+    draw_auxilary.draw_text("Уровень пройден!!!!", 36, settings.WIDTH / 2, settings.HEIGHT / 4)
+    draw_auxilary.draw_text("Умничка!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2.5)
     pygame.display.flip()
     waiting = True
     time_end = pygame.time.get_ticks()
     while waiting:
         settings.clock.tick(settings.FPS)
         for event in pygame.event.get():
-            keystate = pygame.key.get_pressed()
-            if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE]:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE):
                 pygame.quit()
-            if event.type == pygame.KEYUP and pygame.time.get_ticks() - time_end > 1500:
+            elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE and pygame.time.get_ticks() - time_end > 1500:
                 waiting = False
-
-
-def show_lvl2end_screen():
-    pygame.mouse.set_visible(True)
-    settings.screen.blit(background, background_rect)
-    draw_auxilary.draw_text("Второй уровень пройден!!!!", 36, settings.WIDTH / 2, settings.HEIGHT / 4)
-    draw_auxilary.draw_text("Умничка!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2)
-    draw_auxilary.draw_text("Нажми на абсолютно любую клавишу", 18, settings.WIDTH / 2, settings.HEIGHT * 3 / 4)
-    pygame.display.flip()
-    waiting = True
-    time_end = pygame.time.get_ticks()
-    while waiting:
-        settings.clock.tick(settings.FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.KEYUP and pygame.time.get_ticks() - time_end > 1500:
-                waiting = False
+            elif event.type == pygame.MOUSEBUTTONUP:
+                x, y = event.pos
+                if button_continue.rect.collidepoint(x, y):
+                    waiting = False
+                elif button_shop.rect.collidepoint(x, y):
+                    show_shop()
 
 
 def show_win_screen():
@@ -105,3 +96,27 @@ def show_win_screen():
                 pygame.quit()
             if event.type == pygame.KEYUP and pygame.time.get_ticks() - time_end > 1500:
                 waiting = False
+
+
+def show_shop():
+    pygame.mouse.set_visible(True)
+    settings.screen.blit(background_shop, background_shop_rect)
+    draw_auxilary.draw_text("Score: " + str(lvls.score), 18, settings.WIDTH / 2 - 48, 20)
+    draw_auxilary.draw_text("Money: " + str(lvls.money), 18, settings.WIDTH / 2 + 48, 20)
+    button_continue = Button("Продолжить", settings.WIDTH / 2, settings.HEIGHT / 2)
+    button_up_energy_for_shoot = Button("В 2 раза уменьшить потребление энергии за выстрел за 100", settings.WIDTH / 2, settings.HEIGHT / 2 + 100)
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        settings.clock.tick(settings.FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE):
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                x, y = event.pos
+                if button_continue.rect.collidepoint(x, y):
+                    waiting = False
+                elif button_up_energy_for_shoot.rect.collidepoint(x, y):
+                    if lvls.money >= 100:
+                        settings.energy_for_shoot = 1
+                        lvls.money -= 100

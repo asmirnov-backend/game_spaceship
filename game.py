@@ -1,14 +1,9 @@
 import pygame
-import random
-from os import path
-
 import check_collide
-import explosion
+import effects
 import lvls
-import mobs
 import music
 import player_kod
-import powerup_kod
 import settings
 import draw_auxilary
 import draw_screens
@@ -74,7 +69,7 @@ while running:
             game_over = True
         # Если HP меньше нуля, то вычитаем одну жизнь
         if player.hp <= 0:
-            death_explosion = explosion.Explosion(player.rect.center, 'player')
+            death_explosion = effects.Explosion(player.rect.center, 'player')
             settings.all_sprites.add(death_explosion)
             player.hide()
             player.lives -= 1

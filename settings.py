@@ -3,8 +3,7 @@ import pygame
 
 
 # Заданная сложность типо
-score_for_next_lvl = [1500, 3200, 5500]
-energy_for_shoot = 2
+score_for_next_lvl = [250, 5000, 7500]
 enemy_damage = 25
 lvl2_mob2 = 4
 lvl3_mob2 = 3
@@ -13,7 +12,6 @@ lvl3_mob3 = 4
 WIDTH = 1280
 HEIGHT = 720
 FPS = 60
-POWERUP_TIME = 5000
 
 standart_volume = 0.15  # Громкость
 
@@ -31,5 +29,9 @@ snd_dir = path.join(path.dirname(__file__), 'snd')
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)  #pygame.display.set_mode((0, 0), pygame.RESIZABLE)
 pygame.display.set_caption("Game by Andrew")
 clock = pygame.time.Clock()
+
+# Улучшения коробля космического
+POWERUP_TIME = 5000
+energy_for_shoot = 2
 
 all_sprites = pygame.sprite.Group()

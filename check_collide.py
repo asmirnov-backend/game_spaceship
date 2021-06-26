@@ -1,7 +1,6 @@
 import random
 import pygame
-
-import explosion
+import effects
 import lvls
 import mobs
 import music
@@ -16,7 +15,7 @@ def check_all_collides(player, shield):
     for hit in hits:
         lvls.score += 50
         random.choice(music.expl_sounds).play()
-        expl = explosion.Explosion(hit.rect.center, 'lg')
+        expl = effects.Explosion(hit.rect.center, 'lg')
         settings.all_sprites.add(expl)
         if random.random() > 0.9:
             powerup_kod.new_pow(hit.rect.center)
@@ -26,7 +25,7 @@ def check_all_collides(player, shield):
     hits = pygame.sprite.spritecollide(player, mobs.bullets_enemy_group, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.hp -= settings.enemy_damage
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
 
     # проверьте, не попала ли пуля в моб2
@@ -34,7 +33,7 @@ def check_all_collides(player, shield):
     for hit in hits:
         lvls.score += 100
         random.choice(music.expl_sounds).play()
-        expl = explosion.Explosion(hit.rect.center, 'lg')
+        expl = effects.Explosion(hit.rect.center, 'lg')
         settings.all_sprites.add(expl)
         if random.random() > 0.8:
             powerup_kod.new_pow(hit.rect.center)
@@ -45,7 +44,7 @@ def check_all_collides(player, shield):
     for hit in hits:
         lvls.score += 200
         random.choice(music.expl_sounds).play()
-        expl = explosion.Explosion(hit.rect.center, 'lg')
+        expl = effects.Explosion(hit.rect.center, 'lg')
         settings.all_sprites.add(expl)
         if random.random() > 0.7:
             powerup_kod.new_pow(hit.rect.center)
@@ -54,7 +53,7 @@ def check_all_collides(player, shield):
     #  Проверка, не врезался ли моб1 в шит
     hits = pygame.sprite.spritecollide(shield, mobs.mobs1_group, True, pygame.sprite.collide_circle)
     for hit in hits:
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         shield.hp -= 1
         mobs.new_mob_meteor()
@@ -62,7 +61,7 @@ def check_all_collides(player, shield):
     #  Проверка, не врезался ли моб2 в шит
     hits = pygame.sprite.spritecollide(shield, mobs.mobs2_group, True, pygame.sprite.collide_circle)
     for hit in hits:
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         shield.hp -= 3
         mobs.new_mob_ship1()
@@ -70,7 +69,7 @@ def check_all_collides(player, shield):
     #  Проверка, не врезался ли моб3 в шит
     hits = pygame.sprite.spritecollide(shield, mobs.mobs3_group, True, pygame.sprite.collide_circle)
     for hit in hits:
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         shield.hp -= 3
         mobs.new_mob_ship2()
@@ -84,7 +83,7 @@ def check_all_collides(player, shield):
     hits = pygame.sprite.spritecollide(player, mobs.mobs1_group, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.hp -= hit.radius * 2
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         mobs.new_mob_meteor()
 
@@ -92,7 +91,7 @@ def check_all_collides(player, shield):
     hits = pygame.sprite.spritecollide(player, mobs.mobs2_group, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.hp -= 50
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         mobs.new_mob_ship1()
 
@@ -100,13 +99,15 @@ def check_all_collides(player, shield):
     hits = pygame.sprite.spritecollide(player, mobs.mobs3_group, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.hp -= 50
-        expl = explosion.Explosion(hit.rect.center, 'sm')
+        expl = effects.Explosion(hit.rect.center, 'sm')
         settings.all_sprites.add(expl)
         mobs.new_mob_ship2()
 
     # Проверка столкновений игрока и улучшения
     hits = pygame.sprite.spritecollide(player, powerup_kod.powerup_group, True)
     for hit in hits:
+        effect_green = effects.EffectGreen(hit.rect.center)
+        settings.all_sprites.add(effect_green)
         if hit.type == 'hp':
             player.hp += random.randrange(10, 30)
             if player.hp >= 100:

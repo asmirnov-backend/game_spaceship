@@ -1,6 +1,7 @@
 import random
 import pygame
 import draw_screens
+import effects
 import mobs
 import player_kod
 import powerup_kod
@@ -34,7 +35,7 @@ def make_lvl_1():
 
 def make_lvl_2():
     update_all_groups()
-    draw_screens.show_lvl1end_screen()
+    draw_screens.show_lvl_end_screen()
     pygame.mouse.set_visible(False)
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
@@ -45,7 +46,7 @@ def make_lvl_2():
 
 def make_lvl_3():
     update_all_groups()
-    draw_screens.show_lvl2end_screen()
+    draw_screens.show_lvl_end_screen()
     pygame.mouse.set_visible(False)
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
@@ -64,5 +65,7 @@ def spawn_mobs_with_delay(current_lvl):
         mobs.new_mob_ship1()
     if current_lvl == 3 and len(mobs.mobs3_group) < settings.lvl3_mob3 and random.random() > 0.99:
         mobs.new_mob_ship2()
-    if random.random() > 0.997:
+    if random.random() > 0.998:
         powerup_kod.new_pow((random.randint(100, settings.WIDTH - 100), -100))
+        BlueDestroy = effects.EffectBlueDestroy((random.randrange(10, settings.WIDTH), (random.randrange(10, settings.HEIGHT))))
+        settings.all_sprites.add(BlueDestroy)

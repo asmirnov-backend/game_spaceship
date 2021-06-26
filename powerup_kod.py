@@ -8,7 +8,8 @@ import settings
 powerup_images = {}
 for img_name in os.listdir(settings.img_dir + '/PowerUps'):
     power_up_name = img_name.split('.')[0]
-    powerup_images[power_up_name] = pygame.image.load(path.join(settings.img_dir + '/PowerUps', img_name)).convert()
+    powerup_images[power_up_name] = pygame.image.load(path.join(settings.img_dir + '/PowerUps', img_name)).convert_alpha()
+
 
 powerup_group = pygame.sprite.Group()
 
