@@ -1,17 +1,13 @@
+import os
 import random
 from os import path
 import pygame
-
-
-# Загрузка игровой графики
 import settings
 import music
 
-player_imgs_list = ["playerShip1_blue.png", "playerShip1_green.png", "playerShip1_red.png"]
-player_imgs = []
-for img in player_imgs_list:
-    player_imgs.append(pygame.image.load(path.join(settings.img_dir, img)).convert())
-player_img = random.choice(player_imgs)
+
+# Загрузка игровой графики
+player_img = pygame.image.load(path.join(settings.img_dir + '/player', random.choice(os.listdir(settings.img_dir + '/player')))).convert()
 shield_img = pygame.image.load(path.join(settings.img_dir, "shield1.png")).convert()
 player_mini_img = pygame.transform.scale(player_img, (25, 19))
 player_mini_img.set_colorkey(settings.BLACK)

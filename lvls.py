@@ -1,15 +1,12 @@
 import random
-
 import pygame
-
 import draw_screens
 import mobs
 import player_kod
-
-# данные уровня
 import powerup_kod
 import settings
 
+# данные уровня
 money = 0
 score = 0
 
@@ -29,8 +26,8 @@ def make_lvl_1():
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(15):
-        mobs.newmob1()
-    mobs.newmob3()
+        mobs.new_mob_meteor()
+    mobs.new_mob_ship2()
     return player, shield
 
 
@@ -40,7 +37,7 @@ def make_lvl_2():
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(5):
-        mobs.newmob1()
+        mobs.new_mob_meteor()
     return player, shield
 
 
@@ -50,19 +47,19 @@ def make_lvl_3():
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(16):
-        mobs.newmob1()
+        mobs.new_mob_meteor()
     for i in range(2):
-        mobs.newmob2()
+        mobs.new_mob_ship1()
     return player, shield
 
 
 # Спавним мобов и улучшения с рандомной задержкой
 def spawn_mobs_with_delay(current_lvl):
     if current_lvl == 2 and len(mobs.mobs2_group) < settings.lvl2_mob2 and random.random() > 0.99:
-        mobs.newmob2()
+        mobs.new_mob_ship1()
     if current_lvl == 3 and len(mobs.mobs2_group) < settings.lvl3_mob2 and random.random() > 0.99:
-        mobs.newmob2()
+        mobs.new_mob_ship1()
     if current_lvl == 3 and len(mobs.mobs3_group) < settings.lvl3_mob3 and random.random() > 0.99:
-        mobs.newmob3()
+        mobs.new_mob_ship2()
     if random.random() > 0.997:
         powerup_kod.new_pow((random.randint(100, settings.WIDTH - 100), -100))

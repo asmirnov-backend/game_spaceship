@@ -1,3 +1,4 @@
+import os
 import random
 import pygame
 from os import path
@@ -5,20 +6,15 @@ import settings
 
 
 meteor_images = []
-meteor_list = ['meteorBrown_big1.png', 'meteorBrown_tiny2.png',
-               'meteorBrown_med3.png', 'meteorBrown_small1.png', 'meteorBrown_small2.png',
-               'meteorBrown_tiny1.png']
-mob2_list = ["enemyBlack1.png", "enemyBlack2.png", "enemyBlack3.png", "enemyBlack4.png", "enemyBlack5.png"]
-mob3_list = ["enemyBlue1.png", "enemyBlue2.png", "enemyBlue3.png", "enemyBlue4.png", "enemyBlue5.png"]
 mob2_images = []
 mob3_images = []
 bullet_enemy_img = pygame.image.load(path.join(settings.img_dir, "laserBlue03.png")).convert()
-for img in meteor_list:
-    meteor_images.append(pygame.image.load(path.join(settings.img_dir, img)).convert())
-for img in mob2_list:
-    mob2_images.append(pygame.transform.scale(pygame.image.load(path.join(settings.img_dir, img)).convert(), (50, 40)))
-for img in mob3_list:
-    mob3_images.append(pygame.transform.scale(pygame.image.load(path.join(settings.img_dir, img)).convert(), (50, 40)))
+for img_name in os.listdir(settings.img_dir + '/MobMeteor'):
+    meteor_images.append(pygame.image.load(path.join(settings.img_dir + '/MobMeteor', img_name)).convert())
+for img_name in os.listdir(settings.img_dir + '/MobShip1'):
+    mob2_images.append(pygame.transform.scale(pygame.image.load(path.join(settings.img_dir + '/MobShip1', img_name)).convert(), (50, 40)))
+for img_name in os.listdir(settings.img_dir + '/MobShip2'):
+    mob3_images.append(pygame.transform.scale(pygame.image.load(path.join(settings.img_dir + '/MobShip2', img_name)).convert(), (50, 40)))
 
 
 mobs1_group = pygame.sprite.Group()
@@ -27,25 +23,25 @@ mobs3_group = pygame.sprite.Group()
 bullets_enemy_group = pygame.sprite.Group()
 
 
-def newmob1():
-    m = Mob1()
+def new_mob_meteor():
+    m = MobMeteor()
     settings.all_sprites.add(m)
     mobs1_group.add(m)
 
 
-def newmob2():
-    m = Mob2()
+def new_mob_ship1():
+    m = MobShip1()
     settings.all_sprites.add(m)
     mobs2_group.add(m)
 
 
-def newmob3():
-    m = Mob3()
+def new_mob_ship2():
+    m = MobShip2()
     settings.all_sprites.add(m)
     mobs3_group.add(m)
 
 
-class Mob1(pygame.sprite.Sprite):
+class MobMeteor(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_orig = random.choice(meteor_images)
@@ -77,13 +73,13 @@ class Mob1(pygame.sprite.Sprite):
         self.rotate()
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        if self.rect.top > settings.HEIGHT + 10 or self.rect.left < -25 or self.rect.right > settings.WIDTH + 20:
+        if self.rect.top > settings.HEIGHT + 10 or self.rect.left < -100 or self.rect.right > settings.WIDTH + 100 :
             self.rect.x = random.randrange(settings.WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100, -40)
             self.speedy = random.randrange(1, 6)
 
 
-class Mob2(pygame.sprite.Sprite):
+class MobShip1(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_orig = random.choice(mob2_images)
@@ -116,7 +112,7 @@ class Mob2(pygame.sprite.Sprite):
         bullets_enemy_group.add(bullet)
 
 
-class Mob3(pygame.sprite.Sprite):
+class MobShip2(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image_orig = random.choice(mob3_images)
