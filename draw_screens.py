@@ -25,6 +25,7 @@ class Button(pygame.sprite.Sprite):
 
 
 def show_go_screen():
+    pygame.mouse.set_visible(True)
     settings.screen.blit(background_main_menu, background_main_menu.get_rect())
     button1 = Button("Старт", settings.WIDTH / 2, settings.HEIGHT / 2)
     draw_auxilary.draw_text("Игруха от Андрюхи!", 64, settings.WIDTH / 2, settings.HEIGHT / 4)
@@ -52,6 +53,7 @@ def show_go_screen():
 
 
 def show_lvl1end_screen():
+    pygame.mouse.set_visible(True)
     settings.screen.blit(background, background_rect)
     draw_auxilary.draw_text("Первый уровень пройден!!!!", 36, settings.WIDTH / 2, settings.HEIGHT / 4)
     draw_auxilary.draw_text("Умничка!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2)
@@ -70,6 +72,7 @@ def show_lvl1end_screen():
 
 
 def show_lvl2end_screen():
+    pygame.mouse.set_visible(True)
     settings.screen.blit(background, background_rect)
     draw_auxilary.draw_text("Второй уровень пройден!!!!", 36, settings.WIDTH / 2, settings.HEIGHT / 4)
     draw_auxilary.draw_text("Умничка!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2)
@@ -87,6 +90,7 @@ def show_lvl2end_screen():
 
 
 def show_win_screen():
+    pygame.mouse.set_visible(True)
     settings.screen.blit(background_menu, background_menu.get_rect())
     draw_auxilary.draw_text("Ты прошёл игру!!!!", 64, settings.WIDTH / 2, settings.HEIGHT / 4)
     draw_auxilary.draw_text("Поздравляем!!!", 22, settings.WIDTH / 2, settings.HEIGHT / 2)

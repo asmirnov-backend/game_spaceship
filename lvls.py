@@ -23,6 +23,7 @@ def update_all_groups():
 def make_lvl_1():
     update_all_groups()
     draw_screens.show_go_screen()
+    pygame.mouse.set_visible(False)
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(15):
@@ -34,6 +35,7 @@ def make_lvl_1():
 def make_lvl_2():
     update_all_groups()
     draw_screens.show_lvl1end_screen()
+    pygame.mouse.set_visible(False)
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(5):
@@ -44,6 +46,7 @@ def make_lvl_2():
 def make_lvl_3():
     update_all_groups()
     draw_screens.show_lvl2end_screen()
+    pygame.mouse.set_visible(False)
     player = player_kod.new_player()
     shield = player_kod.new_shield(player)
     for i in range(16):
