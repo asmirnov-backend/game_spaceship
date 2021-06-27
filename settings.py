@@ -3,7 +3,7 @@ import pygame
 
 
 # Заданная сложность типо
-score_for_next_lvl = [250, 5000, 7500]
+score_for_next_lvl = [250, 300, 500]
 enemy_damage = 25
 lvl2_mob2 = 4
 lvl3_mob2 = 3
@@ -33,5 +33,6 @@ clock = pygame.time.Clock()
 # Улучшения коробля космического
 POWERUP_TIME = 5000
 energy_for_shoot = 2
+player_speed = 7
 
 all_sprites = pygame.sprite.Group()

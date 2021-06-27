@@ -28,7 +28,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.bottom = settings.HEIGHT - 10
         self.speedx = 0
         self.speedy = 0
-        self.speed = 8
         self.hp = 100
         self.shoot_delay = 250
         self.last_shot = pygame.time.get_ticks()
@@ -66,9 +65,9 @@ class Player(pygame.sprite.Sprite):
         self.speedx = 0
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_a]:
-            self.speedx = -self.speed
+            self.speedx = -settings.player_speed
         if keystate[pygame.K_d]:
-            self.speedx = self.speed
+            self.speedx = settings.player_speed
         if keystate[pygame.K_SPACE]:
             self.shoot()
         self.rect.x += self.speedx
@@ -79,9 +78,9 @@ class Player(pygame.sprite.Sprite):
 
         self.speedy = 0
         if keystate[pygame.K_w]:
-            self.speedy = -self.speed
+            self.speedy = -settings.player_speed
         if keystate[pygame.K_s]:
-            self.speedy = self.speed
+            self.speedy = settings.player_speed
         self.rect.y += self.speedy
         if self.rect.bottom > settings.HEIGHT and not self.hidden:
             self.rect.bottom = settings.HEIGHT

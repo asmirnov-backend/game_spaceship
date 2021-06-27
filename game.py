@@ -26,8 +26,13 @@ while running:
         # проверка для закрытия окна
         if event.type == pygame.QUIT or (event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE):
             running = False
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-            paused = not paused
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                paused = not paused
+            elif event.key == pygame.K_F1:
+                music.gromkost(settings.standart_volume)
+            elif event.key == pygame.K_F2:
+                music.gromkost(0)
 
     if not paused:
         # Держим цикл на правильной скорости
@@ -79,14 +84,6 @@ while running:
         if player.lives == 0 and not death_explosion.alive():
             game_over = True
             current_lvl = 1
-
-        # Проверка на нажатие кнопок на клавиатуре
-        for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_F1:
-                    music.gromkost(settings.standart_volume)
-                elif event.key == pygame.K_F2:
-                    music.gromkost(0)
 
         # Рендеринг
         settings.screen.fill(settings.BLACK)
